@@ -21,7 +21,7 @@ function initializeBanner() {
             source.getAttribute("color");
 
         banner.style.backgroundImage =
-            'url("banner.png")';
+            `url("${new URL("banner.png", document.baseURI).href}")`;
 
         if (color) {
             banner.style.setProperty(
