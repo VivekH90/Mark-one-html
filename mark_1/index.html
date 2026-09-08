@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mark I</title>
+
+    <title><!-- page title --></title>
 
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/layout.css">
@@ -23,7 +24,11 @@
             }
         };
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        defer>
+    </script>
 
     <script src="js/banner.js" defer></script>
     <script src="js/navigation.js" defer></script>
@@ -35,127 +40,101 @@
 
 <body>
 
+    <!-- banner -->
     <banner
-        title="Mathematical Notes"
-        color="#765A75">
+        title=""
+        color="">
     </banner>
 
+    <!-- navigation -->
     <nav class="navbar">
+
         <home
-            color="#DCEBFA"
-            href="index.html">
-            Home
+            color=""
+            href="">
+            <!-- home text -->
         </home>
 
         <date
-            color="#F5E3CF">
-            September 2026
+            color="">
+            <!-- date -->
         </date>
 
         <github
-            color="#DDEBDC"
-            href="https://github.com/VivekH90/Mark-one-html">
-            GitHub
+            color=""
+            href="">
+            <!-- github text -->
         </github>
+
     </nav>
 
+    <!-- main layout -->
     <div class="main-layout">
 
+        <!-- sidebar -->
         <sidebar
-            color="#765A75"
-            title="Navigation">
+            color=""
+            title="">
 
+            <!-- sidebar item -->
             <item
-                title="Home"
-                href="index.html">
+                title=""
+                href="">
             </item>
 
-            <item
-                title="Fundamentals"
-                href="#fundamentals">
-            </item>
-
-            <item
-                title="Definitions"
-                href="#definitions">
-            </item>
+            <!-- add more items here -->
 
         </sidebar>
 
+        <!-- article -->
         <main
             id="document"
             class="note-content">
 
+            <!-- breadcrumbs -->
             <div class="breadcrumbs">
-                <a href="index.html">Home</a>
-                <span>/</span>
-                <span>Mathematical Notes</span>
+
+                <!-- breadcrumb links -->
+
             </div>
 
+            <!-- document title -->
             <h1 class="main-title">
-                Mathematical Notes
+                <!-- main title -->
             </h1>
 
+            <!-- introduction -->
             <p class="intro-paragraph">
-                This is the basic template for a mathematical document.
-                Sections, subsections, the table of contents, and
-                mathematical environments are generated automatically.
+                <!-- introduction -->
             </p>
 
+            <!-- section -->
             <section
-                id="fundamentals"
-                title="Fundamentals"
-                color="#765A75">
+                id=""
+                title=""
+                color="">
 
-                <p>
-                    Write the main content of the section here.
-                    The section number and title are generated from
-                    the attributes above.
-                </p>
+                <!-- section content -->
 
+                <!-- subsection -->
                 <subsection
-                    id="definitions"
-                    title="Definitions"
-                    color="#586C86">
+                    id=""
+                    title=""
+                    color="">
 
-                    <p>
-                        Subsections are numbered automatically according
-                        to their parent section.
-                    </p>
-
-                    <definition
-                        color="#2F9672"
-                        item-color="#2F9672"
-                        title="Example Definition">
-
-                        <r-item>
-                            This is the first enumerated item.
-                        </r-item>
-
-                        <r-item>
-                            This is the second enumerated item.
-                        </r-item>
-
-                    </definition>
+                    <!-- subsection content -->
 
                 </subsection>
 
             </section>
 
-            <section
-                title="Further Results"
-                color="#765A75">
-
-                <p>
-                    Add more mathematical content here.
-                </p>
-
-            </section>
+            <!-- add more sections here -->
 
         </main>
 
+        <!-- table of contents -->
         <table-of-contents
-            color="#765A75">
+            color="">
         </table-of-contents>
 
     </div>
