@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark I</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/banner.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/toc.css">
+    <link rel="stylesheet" href="css/section.css">
+    <link rel="stylesheet" href="css/environments.css">
+    <link rel="stylesheet" href="css/responsiveness.css">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [["\\(", "\\)"]],
+                displayMath: [["\\[", "\\]"]]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+
+    <script src="js/banner.js" defer></script>
+    <script src="js/navigation.js" defer></script>
+    <script src="js/sidebar.js" defer></script>
+    <script src="js/section.js" defer></script>
+    <script src="js/toc.js" defer></script>
+    <script src="js/environments.js" defer></script>
+</head>
+
+<body>
+
+    <banner
+        title="Mathematical Notes"
+        color="#765A75">
+    </banner>
+
+    <nav class="navbar">
+        <home
+            color="#DCEBFA"
+            href="index.html">
+            Home
+        </home>
+
+        <date
+            color="#F5E3CF">
+            September 2026
+        </date>
+
+        <github
+            color="#DDEBDC"
+            href="https://github.com/VivekH90/Mark-one-html">
+            GitHub
+        </github>
+    </nav>
+
+    <div class="main-layout">
+
+        <sidebar
+            color="#765A75"
+            title="Navigation">
+
+            <item
+                title="Home"
+                href="index.html">
+            </item>
+
+            <item
+                title="Fundamentals"
+                href="#fundamentals">
+            </item>
+
+            <item
+                title="Definitions"
+                href="#definitions">
+            </item>
+
+        </sidebar>
+
+        <main
+            id="document"
+            class="note-content">
+
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Mathematical Notes</span>
+            </div>
+
+            <h1 class="main-title">
+                Mathematical Notes
+            </h1>
+
+            <p class="intro-paragraph">
+                This is the basic template for a mathematical document.
+                Sections, subsections, the table of contents, and
+                mathematical environments are generated automatically.
+            </p>
+
+            <section
+                id="fundamentals"
+                title="Fundamentals"
+                color="#765A75">
+
+                <p>
+                    Write the main content of the section here.
+                    The section number and title are generated from
+                    the attributes above.
+                </p>
+
+                <subsection
+                    id="definitions"
+                    title="Definitions"
+                    color="#586C86">
+
+                    <p>
+                        Subsections are numbered automatically according
+                        to their parent section.
+                    </p>
+
+                    <definition
+                        color="#2F9672"
+                        item-color="#2F9672"
+                        title="Example Definition">
+
+                        <r-item>
+                            This is the first enumerated item.
+                        </r-item>
+
+                        <r-item>
+                            This is the second enumerated item.
+                        </r-item>
+
+                    </definition>
+
+                </subsection>
+
+            </section>
+
+            <section
+                title="Further Results"
+                color="#765A75">
+
+                <p>
+                    Add more mathematical content here.
+                </p>
+
+            </section>
+
+        </main>
+
+        <table-of-contents
+            color="#765A75">
+        </table-of-contents>
+
+    </div>
+
+</body>
+</html>
