@@ -64,8 +64,8 @@ function buildSection(
     number.className =
         "section-number";
 
-    number.textContent =
-        sectionNumber;
+    number.innerHTML =
+        "\\(\\S\\) " + sectionNumber;
 
     const text =
         document.createElement("span");
@@ -83,6 +83,8 @@ function buildSection(
 
     section.dataset.number =
         sectionNumber;
+
+    renderSectionMath(section);
 }
 
 // build subsections
@@ -96,7 +98,10 @@ function buildSubsections(
         );
 
     subsections.forEach(
-        (subsection, subsectionIndex) => {
+        (
+            subsection,
+            subsectionIndex
+        ) => {
 
             const subsectionNumber =
                 `${sectionNumber}.${subsectionIndex + 1}`;
@@ -157,4 +162,20 @@ function buildSubsection(
 
     subsection.dataset.number =
         subsectionNumber;
+
+    renderSectionMath(subsection);
+}
+
+// render section mathematics
+function renderSectionMath(section) {
+    if (
+        window.MathJax &&
+        window.MathJax.startup
+    ) {
+        MathJax.startup.promise.then(() => {
+            MathJax.typesetPromise([
+                section
+            ]);
+        });
+    }
 }

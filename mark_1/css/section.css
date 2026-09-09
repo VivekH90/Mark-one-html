@@ -1,3 +1,53 @@
+/* article */
+.note-content {
+    min-width: 0;
+}
+
+/* breadcrumbs */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 23px;
+
+    font-family:
+        "Computer Modern Sans",
+        sans-serif;
+
+    font-size: 0.92rem;
+
+    color: #69758A;
+}
+
+/* breadcrumb links */
+.breadcrumbs a {
+    color: #59677D;
+    text-decoration: none;
+}
+
+/* breadcrumb hover */
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+/* main title */
+.main-title {
+    margin: 0 0 10px;
+
+    font-family:
+        "Computer Modern Sans",
+        sans-serif;
+
+    font-size: 2.7rem;
+    line-height: 1.08;
+    font-weight: 700;
+
+    text-align: left;
+
+    color: #273247;
+}
+
 /* section */
 .section-fundamentals {
     margin: 0;

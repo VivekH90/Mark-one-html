@@ -10,7 +10,8 @@ function initializeSidebar() {
 
     if (!sidebars.length) return;
 
-    const firstSidebar = sidebars[0];
+    const firstSidebar =
+        sidebars[0];
 
     const color =
         firstSidebar.getAttribute("color");
@@ -18,7 +19,8 @@ function initializeSidebar() {
     const sidebar =
         document.createElement("aside");
 
-    sidebar.className = "sidebar";
+    sidebar.className =
+        "sidebar";
 
     if (color) {
         sidebar.style.setProperty(
@@ -28,6 +30,7 @@ function initializeSidebar() {
     }
 
     sidebars.forEach((source, index) => {
+
         if (index > 0) {
             const divider =
                 document.createElement("hr");
@@ -43,14 +46,19 @@ function initializeSidebar() {
         );
     });
 
+    // insert generated sidebar
+    firstSidebar.parentNode.insertBefore(
+        sidebar,
+        firstSidebar
+    );
+
+    // remove source elements
     sidebars.forEach(source => {
         source.remove();
     });
 
-    firstSidebar.parentNode.insertBefore(
-        sidebar,
-        firstSidebar.nextSibling
-    );
+    // render sidebar mathematics
+    renderSidebarMath(sidebar);
 }
 
 // create sidebar group
@@ -58,8 +66,20 @@ function createSidebarGroup(source) {
     const group =
         document.createElement("section");
 
-    group.className = "sidebar-group";
+    group.className =
+        "sidebar-group";
 
+    // search
+    if (
+        source.getAttribute("search") ===
+        "true"
+    ) {
+        group.appendChild(
+            createSidebarSearch()
+        );
+    }
+
+    // group title
     const title =
         source.getAttribute("title");
 
@@ -67,20 +87,26 @@ function createSidebarGroup(source) {
         const heading =
             document.createElement("h2");
 
-        heading.textContent = title;
+        heading.textContent =
+            title;
 
         group.appendChild(heading);
     }
 
+    // item list
     const list =
         document.createElement("ul");
 
-    list.className = "sidebar-items";
+    list.className =
+        "sidebar-items";
 
     const items =
-        source.querySelectorAll(":scope > item");
+        source.querySelectorAll(
+            ":scope > item"
+        );
 
     items.forEach(item => {
+
         const li =
             document.createElement("li");
 
@@ -100,4 +126,51 @@ function createSidebarGroup(source) {
     group.appendChild(list);
 
     return group;
+}
+
+// create search
+function createSidebarSearch() {
+    const search =
+        document.createElement("div");
+
+    search.className =
+        "sidebar-search";
+
+    const input =
+        document.createElement("input");
+
+    input.type = "text";
+    input.placeholder =
+        "Search notes...";
+
+    const button =
+        document.createElement("button");
+
+    button.type = "button";
+
+    button.setAttribute(
+        "aria-label",
+        "Search"
+    );
+
+    button.textContent = "⌕";
+
+    search.appendChild(input);
+    search.appendChild(button);
+
+    return search;
+}
+
+// render sidebar mathematics
+function renderSidebarMath(sidebar) {
+    if (
+        window.MathJax &&
+        window.MathJax.startup
+    ) {
+        MathJax.startup.promise.then(() => {
+            MathJax.typesetPromise([
+                sidebar
+            ]);
+        });
+    }
 }

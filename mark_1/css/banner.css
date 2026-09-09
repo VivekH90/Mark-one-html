@@ -1,3 +1,10 @@
+/* header */
+.header-box {
+    width: 80%;
+    max-width: 1500px;
+    margin: 12px auto 0;
+}
+
 /* banner variables */
 banner {
     --banner-color: #765A75;
@@ -6,7 +13,7 @@ banner {
 /* banner */
 .banner {
     width: 100%;
-    min-height: 180px;
+    min-height: 190px;
 
     box-sizing: border-box;
 
@@ -14,12 +21,13 @@ banner {
 
     display: flex;
     align-items: center;
+    justify-content: center;
 
     background-image: url("../banner.png");
     background-size: cover;
     background-position: center;
 
-    border-radius: 16px;
+    border-radius: 18px;
 
     overflow: hidden;
 
@@ -51,7 +59,7 @@ banner {
         "Computer Modern Sans",
         sans-serif;
 
-    font-size: 2rem;
+    font-size: clamp(3rem, 5vw, 4.35rem);
     line-height: 1.2;
     font-weight: 700;
 

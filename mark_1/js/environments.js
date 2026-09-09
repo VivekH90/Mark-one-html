@@ -26,6 +26,7 @@ const counters = {
 // initialize environments
 function initializeEnvironments() {
     environmentTypes.forEach(type => {
+
         const environments =
             document.querySelectorAll(type);
 
@@ -39,28 +40,18 @@ function initializeEnvironments() {
 }
 
 // build environment
-function buildEnvironment(environment, type) {
+function buildEnvironment(
+    environment,
+    type
+) {
     counters[type]++;
 
-    const number = counters[type];
     const title =
         environment.getAttribute("title") || "";
 
     const color =
-        environment.getAttribute("color");
-
-    const itemColor =
-        environment.getAttribute("item-color");
-
-    environment.style.setProperty(
-        "--env-color",
-        color || getDefaultColor(type)
-    );
-
-    environment.style.setProperty(
-        "--env-item-color",
-        itemColor || getDefaultColor(type)
-    );
+        environment.getAttribute("color") ||
+        getDefaultColor(type);
 
     const box =
         document.createElement("div");
@@ -68,6 +59,36 @@ function buildEnvironment(environment, type) {
     box.className =
         `math-environment ${type}-box`;
 
+    // environment colors
+    box.style.setProperty(
+        "--env-color",
+        color
+    );
+
+    box.style.setProperty(
+        "--env-dark-color",
+        darkenColor(color, 0.45)
+    );
+
+    box.style.setProperty(
+        "--env-light-color",
+        mixColor(
+            color,
+            "#FFFFFF",
+            0.92
+        )
+    );
+
+    box.style.setProperty(
+        "--env-border-color",
+        mixColor(
+            color,
+            "#FFFFFF",
+            0.70
+        )
+    );
+
+    // environment header
     const header =
         document.createElement("div");
 
@@ -80,6 +101,7 @@ function buildEnvironment(environment, type) {
     heading.className =
         "environment-heading";
 
+    // environment name
     const numberElement =
         document.createElement("span");
 
@@ -87,7 +109,7 @@ function buildEnvironment(environment, type) {
         "environment-number";
 
     numberElement.textContent =
-        number;
+        capitalize(type);
 
     const name =
         document.createElement("span");
@@ -96,8 +118,17 @@ function buildEnvironment(environment, type) {
         "environment-name";
 
     name.textContent =
-        title;
+        `(${title})`;
 
+    heading.appendChild(
+        numberElement
+    );
+
+    heading.appendChild(
+        name
+    );
+
+    // environment tag
     const tag =
         document.createElement("span");
 
@@ -107,12 +138,15 @@ function buildEnvironment(environment, type) {
     tag.textContent =
         capitalize(type);
 
-    heading.appendChild(numberElement);
-    heading.appendChild(name);
+    header.appendChild(
+        heading
+    );
 
-    header.appendChild(heading);
-    header.appendChild(tag);
+    header.appendChild(
+        tag
+    );
 
+    // environment content
     const content =
         document.createElement("div");
 
@@ -123,7 +157,11 @@ function buildEnvironment(environment, type) {
         [...environment.children];
 
     children.forEach(child => {
-        if (child.tagName.toLowerCase() === "r-item") {
+
+        if (
+            child.tagName.toLowerCase() ===
+            "r-item"
+        ) {
             addRItem(
                 child,
                 content
@@ -139,10 +177,16 @@ function buildEnvironment(environment, type) {
     box.appendChild(content);
 
     environment.replaceWith(box);
+
+    // render mathematics
+    renderEnvironmentMath(box);
 }
 
 // r-item
-function addRItem(item, content) {
+function addRItem(
+    item,
+    content
+) {
     const wrapper =
         document.createElement("div");
 
@@ -160,7 +204,8 @@ function addRItem(item, content) {
             ".environment-item"
         ).length + 1;
 
-    number.textContent = index;
+    number.textContent =
+        index;
 
     const text =
         document.createElement("div");
@@ -180,6 +225,103 @@ function addRItem(item, content) {
     content.appendChild(wrapper);
 }
 
+// darken color
+function darkenColor(
+    color,
+    factor
+) {
+    const rgb =
+        hexToRGB(color);
+
+    if (!rgb) return color;
+
+    return rgbToHex(
+        rgb.r * factor,
+        rgb.g * factor,
+        rgb.b * factor
+    );
+}
+
+// mix two colors
+function mixColor(
+    color1,
+    color2,
+    amount
+) {
+    const rgb1 =
+        hexToRGB(color1);
+
+    const rgb2 =
+        hexToRGB(color2);
+
+    if (!rgb1 || !rgb2) {
+        return color1;
+    }
+
+    return rgbToHex(
+        rgb1.r * (1 - amount) +
+        rgb2.r * amount,
+
+        rgb1.g * (1 - amount) +
+        rgb2.g * amount,
+
+        rgb1.b * (1 - amount) +
+        rgb2.b * amount
+    );
+}
+
+// hex to rgb
+function hexToRGB(color) {
+    let hex =
+        color.replace("#", "");
+
+    if (hex.length === 3) {
+        hex =
+            hex
+                .split("")
+                .map(value => value + value)
+                .join("");
+    }
+
+    if (hex.length !== 6) {
+        return null;
+    }
+
+    return {
+        r: parseInt(
+            hex.slice(0, 2),
+            16
+        ),
+        g: parseInt(
+            hex.slice(2, 4),
+            16
+        ),
+        b: parseInt(
+            hex.slice(4, 6),
+            16
+        )
+    };
+}
+
+// rgb to hex
+function rgbToHex(
+    r,
+    g,
+    b
+) {
+    return "#" + [
+        r,
+        g,
+        b
+    ]
+        .map(value =>
+            Math.round(value)
+                .toString(16)
+                .padStart(2, "0")
+        )
+        .join("");
+}
+
 // default colors
 function getDefaultColor(type) {
     const colors = {
@@ -192,6 +334,20 @@ function getDefaultColor(type) {
     };
 
     return colors[type];
+}
+
+// render environment mathematics
+function renderEnvironmentMath(box) {
+    if (
+        window.MathJax &&
+        window.MathJax.startup
+    ) {
+        MathJax.startup.promise.then(() => {
+            MathJax.typesetPromise([
+                box
+            ]);
+        });
+    }
 }
 
 // capitalize

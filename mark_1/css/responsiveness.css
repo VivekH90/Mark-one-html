@@ -32,10 +32,14 @@
         width: 250px;
     }
 
-    .table-of-contents-box {
+    table-of-contents {
         grid-column: 1 / -1;
         width: 100%;
         position: static;
+    }
+
+    .table-of-contents-box {
+        width: 100%;
     }
 }
 
