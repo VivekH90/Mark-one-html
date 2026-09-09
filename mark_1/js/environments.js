@@ -26,7 +26,6 @@ const counters = {
 // initialize environments
 function initializeEnvironments() {
     environmentTypes.forEach(type => {
-
         const environments =
             document.querySelectorAll(type);
 
@@ -36,6 +35,10 @@ function initializeEnvironments() {
                 type
             );
         });
+    });
+
+    document.querySelectorAll("proof").forEach(proof => {
+        buildProof(proof);
     });
 }
 
@@ -59,33 +62,9 @@ function buildEnvironment(
     box.className =
         `math-environment ${type}-box`;
 
-    // environment colors
-    box.style.setProperty(
-        "--env-color",
+    setEnvironmentColors(
+        box,
         color
-    );
-
-    box.style.setProperty(
-        "--env-dark-color",
-        darkenColor(color, 0.45)
-    );
-
-    box.style.setProperty(
-        "--env-light-color",
-        mixColor(
-            color,
-            "#FFFFFF",
-            0.92
-        )
-    );
-
-    box.style.setProperty(
-        "--env-border-color",
-        mixColor(
-            color,
-            "#FFFFFF",
-            0.70
-        )
     );
 
     // environment header
@@ -101,7 +80,6 @@ function buildEnvironment(
     heading.className =
         "environment-heading";
 
-    // environment name
     const numberElement =
         document.createElement("span");
 
@@ -118,15 +96,15 @@ function buildEnvironment(
         "environment-name";
 
     name.textContent =
-        `(${title})`;
+        title ? `(${title})` : "";
 
     heading.appendChild(
         numberElement
     );
 
-    heading.appendChild(
-        name
-    );
+    if (title) {
+        heading.appendChild(name);
+    }
 
     // environment tag
     const tag =
@@ -138,13 +116,8 @@ function buildEnvironment(
     tag.textContent =
         capitalize(type);
 
-    header.appendChild(
-        heading
-    );
-
-    header.appendChild(
-        tag
-    );
+    header.appendChild(heading);
+    header.appendChild(tag);
 
     // environment content
     const content =
@@ -156,15 +129,19 @@ function buildEnvironment(
     const children =
         [...environment.children];
 
-    children.forEach(child => {
+    let itemNumber = 0;
 
+    children.forEach(child => {
         if (
             child.tagName.toLowerCase() ===
             "r-item"
         ) {
+            itemNumber++;
+
             addRItem(
                 child,
-                content
+                content,
+                itemNumber
             );
         } else {
             content.appendChild(
@@ -178,34 +155,66 @@ function buildEnvironment(
 
     environment.replaceWith(box);
 
-    // render mathematics
     renderEnvironmentMath(box);
+}
+
+// set environment colors
+function setEnvironmentColors(
+    element,
+    color
+) {
+    element.style.setProperty(
+        "--env-color",
+        color
+    );
+
+    element.style.setProperty(
+        "--env-dark-color",
+        darkenColor(
+            color,
+            0.45
+        )
+    );
+
+    element.style.setProperty(
+        "--env-light-color",
+        mixColor(
+            color,
+            "#FFFFFF",
+            0.92
+        )
+    );
+
+    element.style.setProperty(
+        "--env-border-color",
+        mixColor(
+            color,
+            "#FFFFFF",
+            0.70
+        )
+    );
 }
 
 // r-item
 function addRItem(
     item,
-    content
+    content,
+    number
 ) {
-    const wrapper =
+    const row =
         document.createElement("div");
 
-    wrapper.className =
+    row.className =
         "environment-item";
 
-    const number =
+    const circle =
         document.createElement("div");
 
-    number.className =
+    circle.className =
         "environment-number-circle";
 
-    const index =
-        content.querySelectorAll(
-            ".environment-item"
-        ).length + 1;
-
-    number.textContent =
-        index;
+    circle.textContent =
+        number;
 
     const text =
         document.createElement("div");
@@ -219,10 +228,209 @@ function addRItem(
         );
     });
 
-    wrapper.appendChild(number);
-    wrapper.appendChild(text);
+    row.appendChild(circle);
+    row.appendChild(text);
 
-    content.appendChild(wrapper);
+    content.appendChild(row);
+}
+
+// build proof
+function buildProof(proof) {
+    const colback =
+        proof.getAttribute("colback") ||
+        "#EEF7F2";
+
+    const coltext =
+        proof.getAttribute("coltext") ||
+        "#1F6B4F";
+
+    const box =
+        document.createElement("div");
+
+    box.className =
+        "proof-box";
+
+    box.style.setProperty(
+        "--proof-background",
+        colback
+    );
+
+    box.style.setProperty(
+        "--proof-color",
+        coltext
+    );
+
+    // proof heading
+    const title =
+        document.createElement("h2");
+
+    title.className =
+        "proof-title";
+
+    title.textContent =
+        "Proof";
+
+    box.appendChild(title);
+
+    // proof content
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "proof-content";
+
+    [...proof.children].forEach(child => {
+        const tag =
+            child.tagName.toLowerCase();
+
+        if (tag === "step") {
+            content.appendChild(
+                buildProofStep(
+                    child
+                )
+            );
+        } else if (tag === "proof-figure") {
+            content.appendChild(
+                buildProofFigure(
+                    child
+                )
+            );
+        } else {
+            content.appendChild(
+                child.cloneNode(true)
+            );
+        }
+    });
+
+    box.appendChild(content);
+
+    proof.replaceWith(box);
+
+    renderEnvironmentMath(box);
+}
+
+// build proof step
+function buildProofStep(step) {
+    const row =
+        document.createElement("div");
+
+    row.className =
+        "proof-step";
+
+    const number =
+        document.createElement("div");
+
+    number.className =
+        "proof-step-number";
+
+    const existingSteps =
+        document.querySelectorAll(
+            ".proof-step"
+        ).length;
+
+    number.textContent =
+        existingSteps + 1;
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "proof-step-content";
+
+    const title =
+        step.getAttribute("title") || "";
+
+    if (title) {
+        const heading =
+            document.createElement("h3");
+
+        heading.className =
+            "proof-step-title";
+
+        heading.innerHTML =
+            title;
+
+        content.appendChild(heading);
+    }
+
+    [...step.childNodes].forEach(node => {
+        content.appendChild(
+            node.cloneNode(true)
+        );
+    });
+
+    row.appendChild(number);
+    row.appendChild(content);
+
+    return row;
+}
+
+// build proof figure
+function buildProofFigure(source) {
+    const figure =
+        document.createElement("figure");
+
+    figure.className =
+        "proof-figure";
+
+    const visual =
+        document.createElement("div");
+
+    visual.className =
+        "proof-figure-visual";
+
+    const src =
+        source.getAttribute("src");
+
+    if (src) {
+        const image =
+            document.createElement("img");
+
+        image.src = src;
+
+        const alt =
+            source.getAttribute("alt") ||
+            source.getAttribute("caption") ||
+            "Proof figure";
+
+        image.alt = alt;
+
+        visual.appendChild(image);
+    } else {
+        [...source.childNodes].forEach(node => {
+            visual.appendChild(
+                node.cloneNode(true)
+            );
+        });
+    }
+
+    figure.appendChild(visual);
+
+    const caption =
+        source.getAttribute("caption");
+
+    if (caption) {
+        const figcaption =
+            document.createElement("figcaption");
+
+        const label =
+            document.createElement("strong");
+
+        label.textContent =
+            "Figure:";
+
+        figcaption.appendChild(label);
+
+        figcaption.appendChild(
+            document.createTextNode(
+                ` ${caption}`
+            )
+        );
+
+        figure.appendChild(figcaption);
+    }
+
+    return figure;
 }
 
 // darken color
@@ -233,7 +441,9 @@ function darkenColor(
     const rgb =
         hexToRGB(color);
 
-    if (!rgb) return color;
+    if (!rgb) {
+        return color;
+    }
 
     return rgbToHex(
         rgb.r * factor,
@@ -242,7 +452,7 @@ function darkenColor(
     );
 }
 
-// mix two colors
+// mix colors
 function mixColor(
     color1,
     color2,
@@ -258,22 +468,40 @@ function mixColor(
         return color1;
     }
 
+    const r =
+        rgb1.r +
+        (rgb2.r - rgb1.r) *
+        amount;
+
+    const g =
+        rgb1.g +
+        (rgb2.g - rgb1.g) *
+        amount;
+
+    const b =
+        rgb1.b +
+        (rgb2.b - rgb1.b) *
+        amount;
+
     return rgbToHex(
-        rgb1.r * (1 - amount) +
-        rgb2.r * amount,
-
-        rgb1.g * (1 - amount) +
-        rgb2.g * amount,
-
-        rgb1.b * (1 - amount) +
-        rgb2.b * amount
+        r,
+        g,
+        b
     );
 }
 
-// hex to rgb
+// convert hex to rgb
 function hexToRGB(color) {
+    if (!color) {
+        return null;
+    }
+
     let hex =
-        color.replace("#", "");
+        color.trim();
+
+    if (hex.startsWith("#")) {
+        hex = hex.slice(1);
+    }
 
     if (hex.length === 3) {
         hex =
@@ -287,39 +515,49 @@ function hexToRGB(color) {
         return null;
     }
 
+    const value =
+        parseInt(
+            hex,
+            16
+        );
+
     return {
-        r: parseInt(
-            hex.slice(0, 2),
-            16
-        ),
-        g: parseInt(
-            hex.slice(2, 4),
-            16
-        ),
-        b: parseInt(
-            hex.slice(4, 6),
-            16
-        )
+        r: (value >> 16) & 255,
+        g: (value >> 8) & 255,
+        b: value & 255
     };
 }
 
-// rgb to hex
+// convert rgb to hex
 function rgbToHex(
     r,
     g,
     b
 ) {
-    return "#" + [
+    const values = [
         r,
         g,
         b
-    ]
-        .map(value =>
-            Math.round(value)
-                .toString(16)
-                .padStart(2, "0")
+    ].map(value =>
+        Math.max(
+            0,
+            Math.min(
+                255,
+                Math.round(value)
+            )
         )
-        .join("");
+    );
+
+    return (
+        "#" +
+        values
+            .map(value =>
+                value
+                    .toString(16)
+                    .padStart(2, "0")
+            )
+            .join("")
+    );
 }
 
 // default colors
@@ -336,15 +574,15 @@ function getDefaultColor(type) {
     return colors[type];
 }
 
-// render environment mathematics
-function renderEnvironmentMath(box) {
+// render mathematics
+function renderEnvironmentMath(element) {
     if (
         window.MathJax &&
         window.MathJax.startup
     ) {
         MathJax.startup.promise.then(() => {
             MathJax.typesetPromise([
-                box
+                element
             ]);
         });
     }
@@ -352,6 +590,8 @@ function renderEnvironmentMath(box) {
 
 // capitalize
 function capitalize(text) {
-    return text.charAt(0).toUpperCase() +
-           text.slice(1);
+    return (
+        text.charAt(0).toUpperCase() +
+        text.slice(1)
+    );
 }
