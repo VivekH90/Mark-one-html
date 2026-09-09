@@ -4,17 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><!-- page title --></title>
+    <title>Real Analysis | Axiom of Completeness</title>
 
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/banner.css">
-    <link rel="stylesheet" href="css/navigation.css">
-    <link rel="stylesheet" href="css/sidebar.css">
-    <link rel="stylesheet" href="css/toc.css">
-    <link rel="stylesheet" href="css/section.css">
-    <link rel="stylesheet" href="css/environments.css">
-    <link rel="stylesheet" href="css/responsiveness.css">
+    <link rel="stylesheet" href="css/main.css">
 
     <script>
         window.MathJax = {
@@ -42,30 +34,28 @@
 
     <!-- banner -->
     <banner
-        title=""
-        color="">
+        title="Real Analysis"
+        color="#1F6B4F">
     </banner>
 
     <!-- navigation -->
     <nav class="navbar">
-
         <home
-            color=""
-            href="">
-            <!-- home text -->
+            color="#1F6B4F"
+            href="#">
+            Home
         </home>
 
         <date
-            color="">
-            <!-- date -->
+            color="#1F6B4F">
+            09 Sep 2026
         </date>
 
         <github
-            color=""
-            href="">
-            <!-- github text -->
+            color="#1F6B4F"
+            href="https://github.com/VivekH90/Mark-one-html">
+            Github
         </github>
-
     </nav>
 
     <!-- main layout -->
@@ -73,16 +63,42 @@
 
         <!-- sidebar -->
         <sidebar
-            color=""
-            title="">
+            color="#1F6B4F"
+            search="true">
 
-            <!-- sidebar item -->
-            <item
-                title=""
-                href="">
-            </item>
+            <group title="Related Notes">
+                <item
+                    title="Construction of ℝ"
+                    href="#">
+                </item>
+                <item
+                    title="Ordered Fields"
+                    href="#">
+                </item>
+                <item
+                    title="Supremum and Infimum"
+                    href="#">
+                </item>
+                <item
+                    title="Sequences and Limits"
+                    href="#">
+                </item>
+            </group>
 
-            <!-- add more items here -->
+            <group title="Additional Readings and Problems">
+                <item
+                    title="Problems set 1"
+                    href="#">
+                </item>
+                <item
+                    title="Completeness exercises"
+                    href="#">
+                </item>
+                <item
+                    title="Further reading"
+                    href="#">
+                </item>
+            </group>
 
         </sidebar>
 
@@ -93,48 +109,266 @@
 
             <!-- breadcrumbs -->
             <div class="breadcrumbs">
-
-                <!-- breadcrumb links -->
-
+                <a href="#">Home</a>
+                <span>›</span>
+                <a href="#">Real Analysis</a>
+                <span>›</span>
+                <span>Axiom of Completeness</span>
             </div>
 
             <!-- document title -->
             <h1 class="main-title">
-                <!-- main title -->
+                Axiom of Completeness
             </h1>
 
             <!-- introduction -->
             <p class="intro-paragraph">
-                <!-- introduction -->
+                The axiom of completeness guarantees us that the number line is complete.
+                This is meant in the sense that the number line doesn't have any holes or
+                gaps in it. Every point on the number line would correspond to a real number.
             </p>
 
             <!-- section -->
             <section
-                id=""
-                title=""
-                color="">
+                id="section-1"
+                title="Completeness"
+                color="#1F6B4F">
 
-                <!-- section content -->
+                <!-- definition -->
+                <definition
+                    title="Bounded above/below"
+                    color="#1F6B4F">
 
-                <!-- subsection -->
+                    <r-item>
+                        <p>
+                            \(A \subseteq \mathbb{R}\) is bounded above if and only if there
+                            exists \(b \in \mathbb{R}\) such that
+                        </p>
+
+                        <div class="definition-equation">
+                            \[
+                                a \leq b
+                                \qquad \text{for every } a \in A.
+                            \]
+                        </div>
+
+                        <p>
+                            In this case, \(b\) is called an upper bound of \(A\).
+                        </p>
+                    </r-item>
+
+                    <r-item>
+                        <p>
+                            \(A \subseteq \mathbb{R}\) is bounded below if and only if there
+                            exists \(l \in \mathbb{R}\) such that
+                        </p>
+
+                        <div class="definition-equation">
+                            \[
+                                l \leq a
+                                \qquad \text{for every } a \in A.
+                            \]
+                        </div>
+
+                        <p>
+                            In this case, \(l\) is called a lower bound of \(A\).
+                        </p>
+                    </r-item>
+
+                </definition>
+
+                <!-- axiom -->
+                <axiom
+                    title="Axiom of Completeness"
+                    color="#1F6B4F">
+
+                    <p>
+                        Every nonempty subset of the real numbers that is bounded above
+                        has a least upper bound in \(\mathbb{R}\).
+                    </p>
+
+                    <div class="axiom-statement">
+                        \[
+                            S \subseteq \mathbb{R},\quad
+                            S \neq \varnothing,\quad
+                            S \text{ bounded above}
+                            \quad \Longrightarrow \quad
+                            \exists s \in \mathbb{R}
+                        \]
+                    </div>
+
+                    <r-item>
+                        <p>
+                            \(S\) is bounded above, so there exists an upper bound \(u\)
+                            such that
+                        </p>
+
+                        <div class="definition-equation">
+                            \[
+                                x \leq u
+                                \qquad \text{for every } x \in S.
+                            \]
+                        </div>
+                    </r-item>
+
+                    <r-item>
+                        <p>
+                            A least upper bound exists, so \(s\) satisfies
+                        </p>
+
+                        <div class="definition-equation">
+                            \[
+                                s \geq x
+                                \quad \text{for every } x \in S,
+                                \qquad
+                                c \geq x\ \forall x \in S
+                                \Longrightarrow s \leq c.
+                            \]
+                        </div>
+                    </r-item>
+
+                </axiom>
+
+                <!-- proof -->
+                <proof
+                    colback="#EEF7F2"
+                    coltext="#1F6B4F">
+
+                    <p>
+                        We prove that if \(A \subseteq \mathbb{R}\) is bounded above,
+                        then any upper bound of \(A\) is greater than or equal to every
+                        element of \(A\).
+                    </p>
+
+                    <step title="Take an arbitrary element of \(A$">
+                        <p>
+                            Let \(a \in A\). Since \(u\) is an upper bound of \(A\),
+                            by definition we have
+                        </p>
+
+                        \[
+                            a \leq u.
+                        \]
+                    </step>
+
+                    <step title="Interpret the inequality">
+                        <p>
+                            The inequality \(a \leq u\) holds for every \(a \in A\).
+                            Therefore, \(u\) lies to the right of every element of \(A\)
+                            on the number line.
+                        </p>
+
+                        <proof-figure caption="An upper bound lies to the right of every element of \(A\).">
+                            <svg
+                                viewBox="0 0 700 120"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <line
+                                    x1="70"
+                                    y1="65"
+                                    x2="630"
+                                    y2="65"
+                                    stroke="#1F6B4F"
+                                    stroke-width="3"/>
+
+                                <circle
+                                    cx="180"
+                                    cy="65"
+                                    r="7"
+                                    fill="#1F6B4F"/>
+
+                                <circle
+                                    cx="270"
+                                    cy="65"
+                                    r="7"
+                                    fill="#1F6B4F"/>
+
+                                <circle
+                                    cx="350"
+                                    cy="65"
+                                    r="7"
+                                    fill="#1F6B4F"/>
+
+                                <line
+                                    x1="510"
+                                    y1="45"
+                                    x2="510"
+                                    y2="85"
+                                    stroke="#1F6B4F"
+                                    stroke-width="4"/>
+
+                                <text
+                                    x="170"
+                                    y="105"
+                                    font-size="20"
+                                    fill="#1F6B4F">
+                                    A
+                                </text>
+
+                                <text
+                                    x="495"
+                                    y="35"
+                                    font-size="20"
+                                    fill="#1F6B4F">
+                                    u
+                                </text>
+
+                                <text
+                                    x="95"
+                                    y="35"
+                                    font-size="18"
+                                    fill="#1F6B4F">
+                                    elements of A
+                                </text>
+
+                                <text
+                                    x="455"
+                                    y="105"
+                                    font-size="18"
+                                    fill="#1F6B4F">
+                                    upper bound
+                                </text>
+                            </svg>
+                        </proof-figure>
+                    </step>
+
+                    <step title="Conclude">
+                        <p>
+                            Hence
+                        </p>
+
+                        \[
+                            a \leq u
+                            \qquad \text{for every } a \in A,
+                        \]
+
+                        <p>
+                            which proves that \(u\) is an upper bound of \(A\).
+                        </p>
+                    </step>
+
+                </proof>
+
+                <!-- future content -->
                 <subsection
-                    id=""
-                    title=""
-                    color="">
+                    id="section-1-1"
+                    title="Axiom of Completeness"
+                    color="#1F6B4F">
 
-                    <!-- subsection content -->
+                    <p>
+                        The completeness axiom ensures that bounded sets of real numbers
+                        have least upper bounds. Further consequences, examples, and proofs
+                        can be developed here.
+                    </p>
 
                 </subsection>
 
             </section>
 
-            <!-- add more sections here -->
-
         </main>
 
         <!-- table of contents -->
         <table-of-contents
-            color="">
+            color="#1F6B4F">
         </table-of-contents>
 
     </div>
