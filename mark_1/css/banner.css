@@ -7,7 +7,7 @@
 
 /* banner variables */
 banner {
-    --banner-color: #765A75;
+    --banner-color: #FFFFFF;
 }
 
 /* banner */
@@ -34,21 +34,6 @@ banner {
     position: relative;
 }
 
-/* banner overlay */
-.banner::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background:
-        color-mix(
-            in srgb,
-            var(--banner-color) 18%,
-            transparent
-        );
-}
-
 /* banner title */
 .banner h1 {
     position: relative;
@@ -63,5 +48,5 @@ banner {
     line-height: 1.2;
     font-weight: 700;
 
-    color: #FFFFFF;
+    color: var(--banner-color);
 }
